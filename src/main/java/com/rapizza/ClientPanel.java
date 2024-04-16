@@ -5,6 +5,7 @@ import javax.swing.*;
 import com.rapizza.listeners.DeleteButtonListener;
 import com.rapizza.listeners.LogoutButtonListener;
 import com.rapizza.listeners.OrderButtonListener;
+import com.rapizza.listeners.ProfileButtonListener;
 import com.rapizza.listeners.SelectButtonListener;
 
 import java.awt.*;
@@ -32,9 +33,14 @@ public class ClientPanel extends JPanel {
         commandButton.setToolTipText("Make a new order");
         configureLinkButton(commandButton);
 
-        JButton settingsButton = new JButton("Settings");
-        settingsButton.setToolTipText("Change your settings");
-        configureLinkButton(settingsButton);
+        // Create profile button
+        JButton profileButton = new JButton("Profile");
+        profileButton.setToolTipText("View your profile");
+        configureLinkButton(profileButton);
+
+        // Add a listener to the profile button
+        ProfileButtonListener profileButtonListener = new ProfileButtonListener(this, client);
+        profileButton.addActionListener(profileButtonListener);
 
         // Create logout button
         JButton logoutButton = new JButton("Logout");
@@ -47,7 +53,7 @@ public class ClientPanel extends JPanel {
         // Add the buttons to the toolbar
         toolbar.add(commandButton);
         toolbar.addSeparator();
-        toolbar.add(settingsButton);
+        toolbar.add(profileButton);
         toolbar.addSeparator();
         toolbar.add(logoutButton);
 
@@ -59,7 +65,7 @@ public class ClientPanel extends JPanel {
 
         // Create the menu
         for (Pizza pizza : pizzeria.menu) {
-            JPanel card = createPizzaCard(pizza.nom, pizza.prixMarge, pizza.ingredients);
+            JPanel card = createPizzaCard(pizza.nom, pizza.getPrix(), pizza.ingredients);
             card.setPreferredSize(new Dimension(CARD_WIDTH, CARD_HEIGHT));
             mainPanel.add(card);
         }
@@ -104,8 +110,18 @@ public class ClientPanel extends JPanel {
             orderRecapList.add(Box.createRigidArea(new Dimension(0, 5)));
         }
         
-        // Add the order recap list to the order recap panel
         orderRecapPanel.add(orderRecapList, BorderLayout.CENTER);
+
+        // Create a panel for the total price and the delete button
+        JPanel totalPricePanel = new JPanel();
+        totalPricePanel.setLayout(new BorderLayout());
+        totalPricePanel.setBackground(Color.WHITE);
+
+        // Create the total price label
+        JLabel totalPriceLabel = new JLabel("Total: " + client.getCurrentCommandePrix() + "€");
+        totalPriceLabel.setHorizontalAlignment(JLabel.CENTER);
+        totalPriceLabel.setFont(totalPriceLabel.getFont().deriveFont(Font.BOLD));
+        totalPricePanel.add(totalPriceLabel, BorderLayout.NORTH);
 
         // Create a delete button
         JButton deleteButton = new JButton("Delete");
@@ -115,7 +131,9 @@ public class ClientPanel extends JPanel {
         DeleteButtonListener deleteButtonListener = new DeleteButtonListener(this, client);
         deleteButton.addActionListener(deleteButtonListener);
 
-        orderRecapPanel.add(deleteButton, BorderLayout.SOUTH);
+        totalPricePanel.add(deleteButton, BorderLayout.CENTER);
+
+        orderRecapPanel.add(totalPricePanel, BorderLayout.SOUTH);
 
         // Add the order recap panel to the main panel
         this.add(orderRecapPanel, BorderLayout.EAST);
@@ -199,7 +217,7 @@ public class ClientPanel extends JPanel {
         sizeComboBox.setFocusable(false);
         sizeComboBox.setBackground(Color.WHITE);
         quantitySizePanel.add(sizeComboBox, sizeConstraints);
-    
+
         // Add the quantity and size panel to the main panel
         maiPanel.add(quantitySizePanel, BorderLayout.CENTER);
     
