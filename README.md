@@ -1,5 +1,5 @@
 # Bienvenue dans le projet Rapizza !
-Bienvenue dans le référentiel GitHub du projet Rapizza ! Ce projet, développé en collaboration entre [ttmassa](https://github.com/ttmassa) et [trCVZ](https://github.com/trCVZ), est un gestionnaire d'entreprise de livraisons de pizzas nommé Rapizza, entièrement conçu en Java.
+Ce projet, développé en collaboration entre [ttmassa](https://github.com/ttmassa) et [trCVZ](https://github.com/trCVZ), est un gestionnaire d'entreprise de livraisons de pizzas nommé Rapizza, entièrement conçu en Java.
 
 ## Aperçu du Projet
 Rapizza vise à simplifier la gestion des commandes, des livraisons et de l'inventaire pour une entreprise de livraison de pizzas. Avec une interface utilisateur conviviale et des fonctionnalités robustes, ce projet offre une solution complète pour les entreprises du secteur de la restauration rapide.
